@@ -8,7 +8,7 @@ const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   //  Hardcoded role for now
-  const [role, setRole] = useState<"admin" | "viewer">("admin"); // switch to "viewer" to test
+  const [role] = useState<"admin" | "viewer">("admin"); // switch to "viewer" to test
 
   useEffect(() => {
     const token = localStorage.getItem('token');
