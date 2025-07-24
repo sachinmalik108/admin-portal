@@ -22,7 +22,7 @@ const SourceConfigPage: React.FC<{ role: "admin" | "viewer" }> = ({ role }) => {
 
   const fetchConfigs = async () => {
     try {
-      const res = await axios.get('adminportal.up.railway.app/source-configs/');
+      const res = await axios.get('https://adminportal.up.railway.app/source-configs/');
       setConfigs(res.data);
     } catch (err) {
       console.error('Failed to fetch source configs', err);
@@ -32,7 +32,7 @@ const SourceConfigPage: React.FC<{ role: "admin" | "viewer" }> = ({ role }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await axios.post('adminportal.up.railway.app/source-configs/', form);
+      await axios.post('https://adminportal.up.railway.app/source-configs/', form);
       setForm({ tenant_id: 1, db_host: '', port: 5432, username: '', password: '' });
       fetchConfigs();
     } catch (err) {

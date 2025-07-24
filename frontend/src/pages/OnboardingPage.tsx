@@ -38,7 +38,7 @@ const OnboardingPage: React.FC<{ role: "admin" | "viewer" }> = ({ role }) => {
  
   const fetchTenants = async () => {
     try {
-      const res = await axios.get('adminportal.up.railway.app/tenants/');
+      const res = await axios.get('https://adminportal.up.railway.app/tenants/');
       setTenants(res.data);
     } catch (err) {
       console.error("Fetch tenants failed", err);
