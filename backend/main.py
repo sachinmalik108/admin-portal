@@ -17,7 +17,10 @@ from auth import (
 from fastapi import HTTPException
 
 
-
+origins = [
+    "https://sachinmalikproject.netlify.app" 
+    
+]
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
@@ -25,7 +28,7 @@ app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
     
-    allow_origins=["https://sachinmalikproject.netlify.app"],
+    allow_origins=origins,   
     allow_credentials=True,
     allow_methods=["*"],  
     allow_headers=["*"], 
