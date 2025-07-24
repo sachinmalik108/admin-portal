@@ -96,7 +96,7 @@ const OnboardingPage: React.FC<{ role: "admin" | "viewer" }> = ({ role }) => {
     if (!validate()) return;
 
     try {
-      await axios.post('adminportal.up.railway.app/tenants/', form);
+      await axios.post('https://adminportal.up.railway.app/tenants/', form);
       setForm({ name: '', email: '', timezone: '' });
       setMessage('Tenant created successfully!');
       fetchTenants();
