@@ -52,7 +52,7 @@ const OnboardingPage: React.FC<{ role: "admin" | "viewer" }> = ({ role }) => {
 
   const togglePipeline = async (id: number, currentState: boolean) => {
     try {
-      await axios.put(`adminportal.up.railway.app/tenants/${id}/pipeline?state=${!currentState}`);
+      await axios.put(`https://adminportal.up.railway.app/tenants/${id}/pipeline?state=${!currentState}`);
       fetchTenants();
     } catch (err) {
       console.error("Pipeline toggle failed:", err);
