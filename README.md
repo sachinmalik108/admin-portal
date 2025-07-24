@@ -47,4 +47,7 @@ A full-stack admin portal with FastAPI backend and React (Vite) frontend.
 ## Notes
 - Backend runs on http://localhost:8000
 - Frontend runs on http://localhost:5173
-- CORS is enabled for local development. 
+- CORS is enabled for local development.
+- Go to Backend runs on http://localhost:8000/docs to create dummy users as in screenshot
+- try using admin and viewer
+- 
