@@ -18,8 +18,8 @@ from fastapi import HTTPException
 
 
 origins = [
-    "https://sachinmalikproject.netlify.app" 
-    
+    "https://sachinmalikproject.netlify.app", 
+    "http://localhost:5173",                   
 ]
 Base.metadata.create_all(bind=engine)
 
@@ -27,8 +27,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    
-    allow_origins=origins,   
+    allow_origins= ["*"],   
     allow_credentials=True,
     allow_methods=["*"],  
     allow_headers=["*"], 
