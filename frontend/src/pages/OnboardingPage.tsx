@@ -38,7 +38,7 @@ const OnboardingPage: React.FC<{ role: "admin" | "viewer" }> = ({ role }) => {
  
   const fetchTenants = async () => {
     try {
-      const res = await axios.get('http://localhost:8000/tenants/');
+      const res = await axios.get('adminportal.up.railway.app/tenants/');
       setTenants(res.data);
     } catch (err) {
       console.error("Fetch tenants failed", err);
@@ -52,7 +52,7 @@ const OnboardingPage: React.FC<{ role: "admin" | "viewer" }> = ({ role }) => {
 
   const togglePipeline = async (id: number, currentState: boolean) => {
     try {
-      await axios.put(`http://localhost:8000/tenants/${id}/pipeline?state=${!currentState}`);
+      await axios.put(`adminportal.up.railway.app/tenants/${id}/pipeline?state=${!currentState}`);
       fetchTenants();
     } catch (err) {
       console.error("Pipeline toggle failed:", err);
@@ -96,7 +96,7 @@ const OnboardingPage: React.FC<{ role: "admin" | "viewer" }> = ({ role }) => {
     if (!validate()) return;
 
     try {
-      await axios.post('http://localhost:8000/tenants/', form);
+      await axios.post('adminportal.up.railway.app/tenants/', form);
       setForm({ name: '', email: '', timezone: '' });
       setMessage('Tenant created successfully!');
       fetchTenants();
