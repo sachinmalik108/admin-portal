@@ -13,7 +13,7 @@ const LoginPage: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
     e.preventDefault();
     setError('');
     try {
-      const response = await axios.post('adminportal.up.railway.app/login', new URLSearchParams({
+      const response = await axios.post('http://adminportal.up.railway.app/login', new URLSearchParams({
         username: form.username,
         password: form.password
       }));
