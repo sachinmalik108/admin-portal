@@ -17,20 +17,22 @@ from auth import (
 from fastapi import HTTPException
 
 
-origins = [
-    "https://sachinmalikproject.netlify.app", 
-    "http://localhost:5173",                   
-]
+
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
+origins = [
+    "https://sachinmalikproject.netlify.app",  #  your frontend
+    "http://localhost:5173",                   #  local dev (optional)
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins= ["*"],   
-    allow_credentials=True,
-    allow_methods=["*"],  
-    allow_headers=["*"], 
+    allow_origins=origins,          # specific domains only
+    allow_credentials=True,         #  important if you're using cookies
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 def get_db():
