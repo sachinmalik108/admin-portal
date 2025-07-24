@@ -8,11 +8,14 @@ interface Tenant {
     email: string;
     timezone: string;
     pipeline_running: boolean;
+    last_sync_time?: string;
+    last_error?: string;
+    health_status?: string;
+  }
   
-  
-}
 
-const OnboardingPage: React.FC = () => {
+
+  const OnboardingPage: React.FC<{ role: "admin" | "viewer" }> = ({ role }) => {
   const [form, setForm] = useState({ name: '', email: '', timezone: '' });
   const [tenants, setTenants] = useState<Tenant[]>([]);
 
@@ -64,6 +67,9 @@ const OnboardingPage: React.FC = () => {
     <th>Email</th>
     <th>Timezone</th>
     <th>Pipeline</th>
+    <th>Last Sync</th>
+    <th>Last Error</th>
+    <th>Status</th>
   </tr>
 </thead>
 
@@ -74,14 +80,19 @@ const OnboardingPage: React.FC = () => {
       <td>{t.email}</td>
       <td>{t.timezone}</td>
       <td>
+      {role === "admin" && (
         <button onClick={() => togglePipeline(t.id, t.pipeline_running)}>
           {t.pipeline_running ? 'Stop' : 'Start'}
-        </button>
+        </button>)}
+      </td>
+      <td>{t.last_sync_time?.slice(0, 16).replace("T", " ")}</td>
+      <td>{t.last_error}</td>
+      <td style={{ color: t.health_status === "green" ? "green" : t.health_status === "yellow" ? "orange" : "red" }}>
+        {t.health_status?.toUpperCase()}
       </td>
     </tr>
   ))}
 </tbody>
-
 
       </table>
     </div>

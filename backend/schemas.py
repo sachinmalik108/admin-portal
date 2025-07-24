@@ -13,11 +13,41 @@ class TenantOut(TenantBase):
     
     id: int
     pipeline_running: bool
-    
+    last_sync_time: Optional[str] = None
+    last_error: Optional[str] = None
+    health_status: Optional[str] = None
 
     model_config = {
         "from_attributes": True
     }
+
+class UserBase(BaseModel):
+    username: str
+
+class UserCreate(UserBase):
+    password: str
+    role: str = "viewer"
+
+class UserOut(UserBase):
+    id: int
+    role: str
+
+    model_config = {
+        "from_attributes": True
+    }
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+class TokenData(BaseModel):
+    username: Optional[str] = None
+
+
+
+
+
+
 
 
 class SourceConfigBase(BaseModel):
