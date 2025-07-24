@@ -13,7 +13,7 @@ const validTimezones = [
   "Europe/Berlin",
   "Africa/Nairobi",
   "Asia/Singapore",
-  // Add more as needed
+  
 ];
 
 
@@ -35,7 +35,7 @@ const OnboardingPage: React.FC<{ role: "admin" | "viewer" }> = ({ role }) => {
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [message, setMessage] = useState('');
 
-  // 🔍 Fetch tenants from backend
+ 
   const fetchTenants = async () => {
     try {
       const res = await axios.get('http://localhost:8000/tenants/');
@@ -49,7 +49,7 @@ const OnboardingPage: React.FC<{ role: "admin" | "viewer" }> = ({ role }) => {
     fetchTenants();
   }, []);
 
-  // 🔁 Toggle pipeline
+
   const togglePipeline = async (id: number, currentState: boolean) => {
     try {
       await axios.put(`http://localhost:8000/tenants/${id}/pipeline?state=${!currentState}`);
@@ -59,13 +59,13 @@ const OnboardingPage: React.FC<{ role: "admin" | "viewer" }> = ({ role }) => {
     }
   };
 
-  // ✏️ Input change handler
+ 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
     setErrors({ ...errors, [e.target.name]: '' }); // clear field error
   };
 
-  // ✅ Validate form inputs
+  
   const validate = () => {
     const newErrors: typeof errors = {};
 
@@ -88,7 +88,7 @@ const OnboardingPage: React.FC<{ role: "admin" | "viewer" }> = ({ role }) => {
     return Object.keys(newErrors).length === 0;
   };
 
-  // 📨 Handle submit
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setMessage('');

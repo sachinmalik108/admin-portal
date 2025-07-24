@@ -24,10 +24,10 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],  # Vite dev server origin
+    allow_origins=["http://localhost:5173"],  
     allow_credentials=True,
-    allow_methods=["*"],  # Needed to allow POST, PUT, DELETE
-    allow_headers=["*"],  # Needed for Authorization, Content-Type, etc.
+    allow_methods=["*"],  
+    allow_headers=["*"], 
 )
 
 def get_db():
@@ -49,11 +49,11 @@ def list_tenants(db: Session = Depends(get_db), current_user: models.User = Depe
     result = []
 
     for tenant in tenants:
-        # Simulate "last sync" time
+      
         minutes_ago = random.randint(5, 120)
         last_sync_time = (datetime.now() - timedelta(minutes=minutes_ago)).isoformat(timespec='seconds')
 
-        # Simulate potential error
+        
         last_error = random.choice(["", "", "Timeout error", "DB connection lost", "Auth failed"])
 
         # Determine health status

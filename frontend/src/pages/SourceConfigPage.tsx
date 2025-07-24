@@ -52,7 +52,7 @@ const SourceConfigPage: React.FC<{ role: "admin" | "viewer" }> = ({ role }) => {
     <div style={{ marginTop: '2rem' }}>
       <h2>Source Configurations</h2>
 
-      {/* 🛡️ Admin-only Form */}
+      
       {role === "admin" && (
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', maxWidth: 400 }}>
           <input
@@ -96,7 +96,7 @@ const SourceConfigPage: React.FC<{ role: "admin" | "viewer" }> = ({ role }) => {
         </form>
       )}
 
-      {/* 📋 View-only Table */}
+
       <table border={1} cellPadding={8} style={{ marginTop: '1rem' }}>
         <thead>
           <tr>
