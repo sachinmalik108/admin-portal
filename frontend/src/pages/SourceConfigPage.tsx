@@ -101,7 +101,7 @@ const SourceConfigPage: React.FC<{ role: "admin" | "viewer" }> = ({ role }) => {
         <thead>
           <tr>
             
-            <th>Tenant ID</th>
+            
             <th>DB Host</th>
             <th>Port</th>
             <th>Username</th>
@@ -112,7 +112,6 @@ const SourceConfigPage: React.FC<{ role: "admin" | "viewer" }> = ({ role }) => {
           {configs.map(cfg => (
             <tr key={cfg.id}>
               
-              <td>{cfg.tenant_id}</td>
               <td>{cfg.db_host}</td>
               <td>{cfg.port}</td>
               <td>{cfg.username}</td>

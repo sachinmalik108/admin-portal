@@ -11,7 +11,7 @@ class TenantCreate(TenantBase):
 
 class TenantOut(TenantBase):
     
-    id: int
+    id: int 
     pipeline_running: bool
     last_sync_time: Optional[str] = None
     last_error: Optional[str] = None

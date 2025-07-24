@@ -7,8 +7,8 @@ import SourceConfigPage from './pages/SourceConfigPage';
 const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // ✅ Hardcoded role for now
-  const [role, setRole] = useState<"admin" | "viewer">("viewer"); // switch to "viewer" to test
+  //  Hardcoded role for now
+  const [role, setRole] = useState<"admin" | "viewer">("admin"); // switch to "viewer" to test
 
   useEffect(() => {
     const token = localStorage.getItem('token');
