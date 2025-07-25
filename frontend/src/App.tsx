@@ -29,11 +29,17 @@ const App: React.FC = () => {
 
   return (
     <div style={{ padding: '1rem' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>
-        <h1>Admin Portal</h1>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+        <h1 className="display-5 fw-bold text-primary" style={{ fontFamily: 'Poppins, Montserrat, Segoe UI, Arial, sans-serif', letterSpacing: '1px', margin: 0 }}>
+          Admin Portal
+        </h1>
         <div>
-          <strong>Role:</strong> {role.toUpperCase()}&nbsp;
-          <button onClick={handleLogout}>Logout</button>
+          <span className="fw-semibold text-info" style={{ fontSize: '1.15rem', letterSpacing: '1px' }}>
+            Role: {role.toUpperCase()}
+          </span>
+          <button onClick={handleLogout} className="btn btn-outline-danger btn-sm ms-2" style={{ fontWeight: 600, letterSpacing: '0.5px' }}>
+            Logout
+          </button>
         </div>
       </div>
 

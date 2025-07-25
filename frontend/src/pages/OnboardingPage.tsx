@@ -34,6 +34,7 @@ const OnboardingPage: React.FC<{ role: "admin" | "viewer" }> = ({ role }) => {
   const [tenants, setTenants] = useState<Tenant[]>([]);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [message, setMessage] = useState('');
+  const [showMessage, setShowMessage] = useState(true);
 
  
   const fetchTenants = async () => {
@@ -92,6 +93,7 @@ const OnboardingPage: React.FC<{ role: "admin" | "viewer" }> = ({ role }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setMessage('');
+    setShowMessage(true);
 
     if (!validate()) return;
 
@@ -99,68 +101,97 @@ const OnboardingPage: React.FC<{ role: "admin" | "viewer" }> = ({ role }) => {
       await axios.post('https://adminportal.up.railway.app/tenants/', form);
       setForm({ name: '', email: '', timezone: '' });
       setMessage('Tenant created successfully!');
+      setShowMessage(true);
+      setTimeout(() => setShowMessage(false), 3000);
       fetchTenants();
     } catch (err) {
       setMessage('Failed to create tenant.');
+      setShowMessage(true);
+      setTimeout(() => setShowMessage(false), 3000);
     }
   };
 
   return (
-    <div style={{ padding: '2rem' }}>
-      <h2>Customer Onboarding</h2>
-      
-      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', maxWidth: '400px', marginBottom: '2rem' }}>
-        <input name="name" placeholder="Name" value={form.name} onChange={handleChange} />
-        {errors.name && <span style={{ color: 'red' }}>{errors.name}</span>}
-
-        <input name="email" placeholder="Email" value={form.email} onChange={handleChange} />
-        {errors.email && <span style={{ color: 'red' }}>{errors.email}</span>}
-
-        <input name="timezone" placeholder="Timezone" value={form.timezone} onChange={handleChange} />
-        {errors.timezone && <span style={{ color: 'red' }}>{errors.timezone}</span>}
-
-        <button type="submit">Create Tenant</button>
-      </form>
-
-      {message && <p style={{ color: message.includes('successfully') ? 'green' : 'red' }}>{message}</p>}
-
-      <h3>All Tenants</h3>
-      <table border={1} cellPadding={8}>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Timezone</th>
-            <th>Pipeline</th>
-            <th>Last Sync</th>
-            <th>Last Error</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {tenants.map(t => (
-            <tr key={t.id}>
-              <td>{t.name}</td>
-              <td>{t.email}</td>
-              <td>{t.timezone}</td>
-              <td>
-                {role === "admin" ? (
-                  <button onClick={() => togglePipeline(t.id, t.pipeline_running)}>
-                    {t.pipeline_running ? 'Stop' : 'Start'}
-                  </button>
-                ) : (
-                  <span>{t.pipeline_running ? 'Running' : 'Stopped'}</span>
-                )}
-              </td>
-              <td>{t.last_sync_time?.slice(0, 16).replace("T", " ")}</td>
-              <td>{t.last_error}</td>
-              <td style={{ color: t.health_status === "green" ? "green" : t.health_status === "yellow" ? "orange" : "red" }}>
-                {t.health_status?.toUpperCase()}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div
+      className="container-fluid min-vh-100 d-flex flex-column align-items-center justify-content-center"
+      data-bs-theme="dark"
+      style={{
+        padding: 0,
+        background: 'linear-gradient(135deg, #232526 0%, #414345 40%, #6a82fb 70%, #00c6fb 100%)',
+      }}
+    >
+      <div className="container py-5">
+        <h2 className="mb-4 display-4 fw-bold text-info" style={{ fontFamily: 'Poppins, Montserrat, Segoe UI, Arial, sans-serif', letterSpacing: '1px', textShadow: '0 2px 8px rgba(0,198,251,0.2)' }}>Customer Onboarding</h2>
+        <form onSubmit={handleSubmit} className="mb-5" style={{ maxWidth: '400px' }}>
+          <div className="mb-3">
+            <input name="name" placeholder="Name" value={form.name} onChange={handleChange} className="form-control form-control-lg" />
+            {errors.name && <div className="text-danger small mt-1">{errors.name}</div>}
+          </div>
+          <div className="mb-3">
+            <input name="email" placeholder="Email" value={form.email} onChange={handleChange} className="form-control form-control-lg" />
+            {errors.email && <div className="text-danger small mt-1">{errors.email}</div>}
+          </div>
+          <div className="mb-3">
+            <input name="timezone" placeholder="Timezone" value={form.timezone} onChange={handleChange} className="form-control form-control-lg" />
+            {errors.timezone && <div className="text-danger small mt-1">{errors.timezone}</div>}
+          </div>
+          <button type="submit" className="btn btn-primary btn-lg w-100">Create Tenant</button>
+        </form>
+        {showMessage && message && (
+          <p className={"fw-bold " + (message.includes('successfully') ? 'text-success' : 'text-danger')}>
+            {message}
+          </p>
+        )}
+        <h3 className="mb-3 display-6 fw-bold text-info" style={{ fontFamily: 'Poppins, Montserrat, Segoe UI, Arial, sans-serif', letterSpacing: '0.5px', textShadow: '0 1px 4px rgba(0,198,251,0.15)' }}>
+          All Tenants
+        </h3>
+        <div className="card shadow-lg rounded-4 p-4 mb-5" style={{ background: 'rgba(30, 34, 90, 0.7)', backdropFilter: 'blur(8px)', border: '1px solid rgba(255,255,255,0.08)' }}>
+          <div className="table-responsive">
+            <table className="table table-dark table-striped table-bordered table-hover align-middle mb-0 rounded-3 overflow-hidden">
+              <thead className="table-primary text-dark">
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Timezone</th>
+                  <th>Pipeline</th>
+                  <th>Last Sync</th>
+                  <th>Last Error</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {tenants.map(t => (
+                  <tr key={t.id} className="tenant-row source-row">
+                    <td>{t.name}</td>
+                    <td>{t.email}</td>
+                    <td>{t.timezone}</td>
+                    <td>
+                      {role === "admin" ? (
+                        <button className={"btn btn-sm " + (t.pipeline_running ? "btn-danger" : "btn-success")} onClick={() => togglePipeline(t.id, t.pipeline_running)}>
+                          {t.pipeline_running ? 'Stop' : 'Start'}
+                        </button>
+                      ) : (
+                        <span>{t.pipeline_running ? 'Running' : 'Stopped'}</span>
+                      )}
+                    </td>
+                    <td>{t.last_sync_time?.slice(0, 16).replace("T", " ")}</td>
+                    <td>{t.last_error}</td>
+                    <td>
+                      <span className={
+                        t.health_status === "green" ? "badge bg-success" :
+                        t.health_status === "yellow" ? "badge bg-warning text-dark" :
+                        "badge bg-danger"
+                      }>
+                        {t.health_status?.toUpperCase()}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
